@@ -1,0 +1,18 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Serial</th>
+            <th scope="col">Revision</th>
+            <th scope="col">Time Taken</th>
+            <th scope="col">View</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let submission of data; let i = index">
+            <th scope="row">{{i}}</th>
+            <td>{{submission?.version}}</td>
+            <td>{{submission?.timeTaken}}</td>
+            <td><button type="button" class="btn btn-outline-primary">View</button></td>
+        </tr>
+    </tbody>
+</table>
