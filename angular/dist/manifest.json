@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "scaler",
+  "short_name": "scaler",
+  "version": "1.0.0",
+  "description": "Scaler Extension",
+  "host_permissions": ["https://*.scaler.com/*"],
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "action": {
+    "default_popup": "index.html?#/revisions",
+    "default_title": "Scaler",
+    "default_icon": {
+      "16": "assets/scaler.png",
+      "24": "assets/scaler.png",
+      "32": "assets/scaler.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.scaler.com/*"
+      ],
+      "js": [
+        "contentPage.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "serviceWorker.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}
