@@ -2,20 +2,23 @@ const constants = {
   api_dev_key: "hmadHHkmdddSmI4ybS-iVV5wK0HqAPEt",
   buttons: {
     share: {
-      title: "Share",
+      title: "Share - Create a Shareable Link",
       classList: ["tappable", "btn", "btn-small", "btn-icon", "btn-dark"],
       innerHTML: '<i class="cr-icon-code cr-editor-toolbar-component__icon"></i>'
     },
     timer: {
-      title: "Start Timer",
+      title: "Start Timer - Track time taken on this submission",
       classList: ["tappable", "btn", "btn-small", "btn-icon", "btn-dark"],
       innerHTML: '<i class="cr-icon-meter cr-editor-toolbar-component__icon"></i>'
     }
+  },
+  messages: {
+    timerStarted: "Timer Started. Timer ends on Submission."
   }
 }
 
 let start_time, end_time, time_taken;
-let class_id, problem_id;
+let class_id, problem_id, revisions = [];
 
 const selectors = {
   toolbarContainer: '.me-cr-editor-toolbar__container.me-cr-editor-toolbar__container--right',
@@ -52,13 +55,18 @@ const shareBtnHandler = async () => {
 
 const timerBtnHandler = () => {
   start_time = Date.now();
-  alert('Timer Started')
+  alert(constants.messages.timerStarted);
 }
 
 const submitBtnHandler = async () => {
   end_time = Date.now();
   time_taken = end_time - start_time;
-  // chrome.stora
+  chrome.storage.sync.set({
+    [`${class_id}_${problem_id}`]: JSON.stringify([...revisions, {
+      version: Date.now(),
+      timeTaken: `${time_taken} Seconds`
+    }])
+  });
   alert(`Code Submitted. Time taken is ${time_taken / 1000} Second`);
 
 }
@@ -136,7 +144,6 @@ const createSubmission = ({ code = "test", language = "plaintext" }) => {
 
   return axios(config);
 }
-
 
 (() => {
   init();

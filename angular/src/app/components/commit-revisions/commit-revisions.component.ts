@@ -7,6 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CommitRevisionsComponent implements OnInit {
 
+  async getActiveTabURL() {
+    const tabs = await chrome.tabs.query({
+      currentWindow: true,
+      active: true
+    });
+
+    return tabs[0];
+  }
+
   data = [
     {
       version: "v1",
@@ -28,7 +37,21 @@ export class CommitRevisionsComponent implements OnInit {
 
   constructor() { }
 
+  async fetchRevisions() {
+    const currentTab = await this.getActiveTabURL();
+    const currentUrl = currentTab.url;
+    const regex = /.*\/class\/(.*)\/assignment\/problems\/(.*)\/.*/;
+    const [, classId, problemId] = currentUrl.match(regex) || [];
+    if (classId && problemId) {
+      const key = `${classId}_${problemId}`
+      chrome.storage.sync.get([key], (data) => {
+        this.data = data[key] ? JSON.parse(data[key]) : [];;
+      });
+    }
+  }
+
   ngOnInit(): void {
+    // this.fetchRevisions();
   }
 
 }

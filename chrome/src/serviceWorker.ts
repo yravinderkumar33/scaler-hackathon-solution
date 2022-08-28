@@ -3,9 +3,7 @@
         console.log(tab);
         if (tab.url && tab.url.includes("scaler.com")) {
             const regex = /.*\/class\/(.*)\/assignment\/problems\/(.*)[?]/;
-            const found = tab.url.match(regex);
-            console.log({ found });
-
+            const found = tab.url.match(regex) || [];
             if (found?.length) {
                 const [, classId, problemId] = found;
                 chrome.tabs.sendMessage(tabId, {
