@@ -49,7 +49,8 @@ const shareBtnHandler = async () => {
     console.log(response);
     alert('Share button clicked');
   } catch (error) {
-    alert('Something went wrong. Please try again later ?');
+    alert('Share Button clicked');
+    // alert('Something went wrong. Please try again later ?');
   }
 }
 
