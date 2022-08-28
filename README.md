@@ -11,3 +11,5 @@
 6. Click on `Load Unpacked` -> go to the repo location -> select dist folder -> Done
 7. The extension should now be available in your browser.
  
+
+[![Watch Demo]](https://youtu.be/h170vLs7M7o)
